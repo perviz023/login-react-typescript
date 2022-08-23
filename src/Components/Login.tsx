@@ -8,14 +8,14 @@ const Login = () => {
     password: "",
   });
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     setInputs((prevState) => ({
       ...prevState,
       [event.target.name]: event.target.value,
     }));
   };
 
-  const submitForm = (event) => {
+  const submitForm = (event: any) => {
     event.preventDefault();
   };
 
@@ -43,6 +43,7 @@ const Login = () => {
             Login
           </Typography>
           <TextField
+            name={"email"}
             value={inputs.email}
             onChange={handleChange}
             margin="normal"
@@ -51,6 +52,7 @@ const Login = () => {
             placeholder="E-mail"
           />
           <TextField
+            name={"password"}
             value={inputs.password}
             onChange={handleChange}
             margin="normal"
