@@ -7,6 +7,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+   
   return (
     <div>
       <form>
@@ -44,7 +46,7 @@ const Login = () => {
             variant="outlined"
             placeholder="Password"
           />
-          <Button sx={{ marginTop: 3, borderRadius: 3 }} variant="contained">
+          <Button type="submit" sx={{ marginTop: 3, borderRadius: 3 }} variant="contained">
             Login
           </Button>
         </Box>
