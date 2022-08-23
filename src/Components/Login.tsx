@@ -8,10 +8,20 @@ const Login = () => {
     password: "",
   });
 
-   
+  const handleChange = (event) => {
+    setInputs((prevState) => ({
+      ...prevState,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const submitForm = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={submitForm}>
         <Box
           display="flex"
           flexDirection="column"
@@ -34,6 +44,7 @@ const Login = () => {
           </Typography>
           <TextField
             value={inputs.email}
+            onChange={handleChange}
             margin="normal"
             type={"email"}
             variant="outlined"
@@ -41,12 +52,17 @@ const Login = () => {
           />
           <TextField
             value={inputs.password}
+            onChange={handleChange}
             margin="normal"
             type={"password"}
             variant="outlined"
             placeholder="Password"
           />
-          <Button type="submit" sx={{ marginTop: 3, borderRadius: 3 }} variant="contained">
+          <Button
+            type="submit"
+            sx={{ marginTop: 3, borderRadius: 3 }}
+            variant="contained"
+          >
             Login
           </Button>
         </Box>
