@@ -1,27 +1,24 @@
 import { TextField, Typography, Button } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import { Controller, useForm, SubmitHandler, useFormState} from "react-hook-form";
+import { passwordValidation, loginValidation } from "./validation"
+
+interface ISignForm {
+  login: string;
+  password: string
+}
 
 const Login = () => {
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-  });
+  const { handleSubmit, control } = useForm<ISignForm>();
+  const { errors } = useFormState({
+    control
+  })
 
-  const handleChange = (event: any) => {
-    setInputs((prevState) => ({
-      ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  const submitForm = (event: any) => {
-    event.preventDefault();
-  };
+  const onSubmit: SubmitHandler<ISignForm> = (data) => console.log(data);
 
   return (
     <div>
-      <form onSubmit={submitForm}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box
           display="flex"
           flexDirection="column"
@@ -42,24 +39,41 @@ const Login = () => {
           <Typography variant="h2" padding={3} textAlign="center">
             Login
           </Typography>
-          <TextField
-            name={"email"}
-            value={inputs.email}
-            onChange={handleChange}
-            margin="normal"
-            type={"email"}
-            variant="outlined"
-            placeholder="E-mail"
+          <Controller
+            control={control}
+            name="login"
+            rules={loginValidation}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                type={"email"}
+                variant="outlined"
+                placeholder="E-mail"
+                onChange={(e) => field.onChange(e)}
+                value={field.value}
+                error= {!!errors.login?.message}
+                helperText = {errors.login?.message}
+              />
+            )}
           />
-          <TextField
-            name={"password"}
-            value={inputs.password}
-            onChange={handleChange}
-            margin="normal"
-            type={"password"}
-            variant="outlined"
-            placeholder="Password"
+          <Controller
+            control={control}
+            name="password"
+            rules={passwordValidation}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                type={"password"}
+                variant="outlined"
+                placeholder="Password"
+                onChange={(e) => field.onChange(e)}
+                value={field.value}
+                error= {!!errors.password?.message}
+                helperText = {errors.password?.message}
+              />
+            )}
           />
+
           <Button
             type="submit"
             sx={{ marginTop: 3, borderRadius: 3 }}
